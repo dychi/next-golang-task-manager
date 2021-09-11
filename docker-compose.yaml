@@ -13,11 +13,11 @@ services:
       MYSQL_PASSWORD: apipassword
       TZ: Asia/Tokyo
     volumes:
-      # - ./db/setup:/docker-entrypoint-initdb.d
+      - ./db/sql:/docker-entrypoint-initdb.d
       # - ./db/my.cnf:/etc/mysql/conf.d/my.cnf
-      - db.volume:/var/lib/mysql
+      - golang-task.db.volume:/var/lib/mysql
     # command: mysqld --default-authentication-plugin=mysql_native_password
 
 volumes:
-  db.volume:
-    name: db.volume
+  golang-task.db.volume:
+    name: golang-task.db.volume
