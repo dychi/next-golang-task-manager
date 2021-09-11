@@ -23,7 +23,7 @@ func NewTaskUseCase(tr repository.TaskRepository) TaskUseCase {
 	}
 }
 
-func (tu TaskUseCase) GetByTaskID(DB *sql.DB, taskID int) (*domain.Task, error) {
+func (tu taskUseCase) GetByTaskID(DB *sql.DB, taskID int) (*domain.Task, error) {
 	task, err := tu.taskRepository.GetByTaskID(DB, taskID)
 	if err != nil {
 		return nil, err
@@ -31,11 +31,11 @@ func (tu TaskUseCase) GetByTaskID(DB *sql.DB, taskID int) (*domain.Task, error) 
 	return task, nil
 }
 
-func (tu TaskUseCase) Insert(DB *sql.DB, name, deadline string) error {
+func (tu taskUseCase) Insert(DB *sql.DB, name, deadline string) error {
 	// バリデーションなど
 	// domain を介して infrastructure で実装した関数を呼び出す
 	// Persistence (Repository) を呼出
-	err = tu.taskRepository.Insert(DB, name, deadline)
+	err := tu.taskRepository.Insert(DB, name, deadline)
 	if err != nil {
 		return err
 	}

@@ -4,6 +4,9 @@ import (
 	"fmt"
 	"log"
 	"net/http"
+	"task-manager/infrastructure/persistence"
+	interfaces "task-manager/interfaces/handler"
+	"task-manager/usecase"
 
 	"github.com/julienschmidt/httprouter"
 
@@ -16,15 +19,15 @@ func Hello(w http.ResponseWriter, r *http.Request, ps httprouter.Params) {
 
 func main() {
 	// 依存関係を注入
-	// taskPersistence := persistence.NewTaskPersistence()
-	// taskUseCase := usecase.NewTaskUseCase(taskPersistence)
-	// taskHandler := interfaces.NewTaskHandler(taskUseCase)
+	taskPersistence := persistence.NewTaskPersistence()
+	taskUseCase := usecase.NewTaskUseCase(taskPersistence)
+	taskHandler := interfaces.NewTaskHandler(taskUseCase)
 
 	// ルーティングの設定
 	router := httprouter.New()
 	router.GET("/api/hello/:name", Hello)
-	// router.GET("/api/task", taskHandler.HandleTaskGet)
-	// router.POST("/api/task", taskHandler.HandleTaskPost)
+	router.GET("/api/task/:id", taskHandler.HandleTaskGet)
+	router.POST("/api/task", taskHandler.HandleTaskPost)
 
 	// サーバーの起動
 	fmt.Println("===================")
